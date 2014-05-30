@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <fullnamespace>RelatedContent\RelatedContent</fullnamespace>
+    <descriptive locale="en_US">
+        <title>Associate content between them</title>
+    </descriptive>
+    <descriptive locale="fr_FR">
+        <title>Associer des contenus entre eux</title>
+    </descriptive>
+    <version>0.1</version>
+    <author>
+        <name>Michaël Espeche</name>
+        <email>mespeche@openstudio.fr</email>
+    </author>
+    <type>classic</type>
+    <thelia>2.0.0</thelia>
+    <stability>alpha</stability>
+</module>

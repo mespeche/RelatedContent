@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database defaultIdMethod="native" name="thelia" namespace="RelatedContent\Model">
+    <!--
+    See propel documentation on http://propelorm.org for all information about schema file
+    -->
+
+    <table isCrossRef="true" name="related_content">
+        <column name="content_id" primaryKey="true" required="true" type="INTEGER" />
+        <column name="related_content_id" primaryKey="true" required="true" type="INTEGER" />
+
+        <foreign-key foreignTable="content" name="fk_content_id" onDelete="CASCADE" onUpdate="RESTRICT">
+            <reference foreign="id" local="content_id" />
+        </foreign-key>
+        <foreign-key foreignTable="content" name="fk_related_content_content_id" onDelete="CASCADE" onUpdate="RESTRICT">
+            <reference foreign="id" local="related_content_id" />
+        </foreign-key>
+        <index name="idx_content_id">
+            <index-column name="content_id" />
+        </index>
+        <index name="idx_related_content_id">
+            <index-column name="related_content_id" />
+        </index>
+        <behavior name="timestampable" />
+    </table>
+
+    <external-schema filename="local/config/schema.xml" referenceOnly="true" />
+</database>

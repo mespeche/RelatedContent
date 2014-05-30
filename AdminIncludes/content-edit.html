@@ -1,0 +1,84 @@
+<div class="related-content-module">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{intl l="Related contents"}</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    {form name="related-content.admin"}
+                        <form action="{url path="/admin/content/update/{content attr='id'}/related-contents"}" method="POST" role="form">
+                            <legend>{intl l="Related contents association"}</legend>
+
+                            {form_hidden_fields form=$form}
+
+                            {form_field form=$form field='success_url'}
+                            <input type="hidden" name="{$name}" value="{url path="/admin/content/update/{content attr='id'}/related-contents"}" />
+                            {/form_field}
+
+                            {if $form_error}<div class="alert alert-danger">{$form_error_message}</div>{/if}
+
+                            {form_field form=$form field="content"}
+                            <div class="input-group">
+                                <select name="{$name}" class="form-control">
+                                    {loop name="content-list" type="content"}
+                                    <option value="{$ID}">{$TITLE}</option>
+                                    {/loop}
+                                </select>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-primary" type="submit"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                                    </span>
+                            </div>
+                            {/form_field}
+
+                        </form>
+                    {/form}
+                </div>
+                <div class="col-md-6">
+                    {ifloop rel="related-content"}
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{intl l="Title"}</th>
+                                <th>{intl l="Actions"}</th>
+                            </tr>
+                        </thead>
+                        {loop name="related-content" type="related_content" content_id="{content attr='id'}"}
+                        <tr>
+                            <td>{$TITLE}</td>
+                            <td class="actions">
+                                {loop type="auth" name="can_delete" role="ADMIN" resource="admin.keyword" access="DELETE"}
+                                    <a class="btn btn-danger btn-block btn-xs related-content-delete" href="#related_content_delete_dialog" data-id="{$ID}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span></a>
+                                {/loop}
+                            </td>
+                        </tr>
+                        {/loop}
+                    </table>
+                    {/ifloop}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{* -- Delete keyword confirmation dialog ----------------------------------- *}
+
+{capture "related_content_delete_dialog"}
+    <input type="hidden" name="content_id" value="{content attr='id'}" />
+    <input type="hidden" name="related_content_id" id="related_content_delete_id" value="" />
+{/capture}
+
+{include
+file = "includes/generic-confirm-dialog.html"
+
+dialog_id       = "related_content_delete_dialog"
+dialog_title    = {intl l="Delete related content"}
+dialog_message  = {intl l="Do you really want to delete this related content associations ?"}
+
+form_action         = {url path='/admin/module/RelatedContent/delete'}
+form_content        = {$smarty.capture.related_content_delete_dialog nofilter}
+}

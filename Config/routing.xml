@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="admin.related-contents.create" path="/admin/content/update/{content_id}/related-contents">
+        <default key="_controller">RelatedContent\Controller\Admin\RelatedContentController::updateRelatedContentAssociation</default>
+        <requirement key="content_id">\d+</requirement>
+    </route>
+
+    <route id="admin.related-contents.delete" path="/admin/module/RelatedContent/delete">
+        <default key="_controller">RelatedContent\Controller\Admin\RelatedContentController::deleteAction</default>
+    </route>
+
+</routes>
